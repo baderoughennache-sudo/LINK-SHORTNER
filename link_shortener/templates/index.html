@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raccourcisseur de liens</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #263238;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 24px;
+            color: #1a237e;
+        }
+
+        .shorten-form {
+            display: flex;
+            gap: 10px;
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .shorten-form input[type=text] {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .shorten-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #3949ab;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .shorten-form button:hover {
+            background-color: #303f9f;
+        }
+
+        .new-link-box {
+            margin-top: 20px;
+            padding: 14px 16px;
+            border-left: 4px solid #3949ab;
+            background: #e8eaf6;
+            border-radius: 4px;
+        }
+
+        .new-link-box a {
+            color: #1a237e;
+            font-weight: bold;
+        }
+
+        .link-history {
+            margin-top: 40px;
+        }
+
+        .link-history h2 {
+            font-size: 16px;
+            color: #546e7a;
+            margin-bottom: 12px;
+        }
+
+        .link-history table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .link-history th {
+            background-color: #eceff1;
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #455a64;
+        }
+
+        .link-history td {
+            padding: 10px 12px;
+            font-size: 13px;
+            border-top: 1px solid #eceff1;
+        }
+
+        .link-history tr:hover td {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Raccourcisseur de liens</h1>
+
+    <form class="shorten-form" method="POST">
+        <input type="text" name="url" placeholder="Collez une URL longue..." required>
+        <button type="submit">Raccourcir</button>
+    </form>
+
+    {% if short_url %}
+    <div class="new-link-box">
+        Votre lien court : <a href="{{ short_url }}">{{ short_url }}</a>
+    </div>
+    {% endif %}
+
+    {% if links %}
+    <div class="link-history">
+        <h2>Historique des liens</h2>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>URL d'origine</th>
+                <th>Clics</th>
+            </tr>
+            {% for link in links %}
+            <tr>
+                <td>{{ link.short_code }}</td>
+                <td>{{ link.original_url }}</td>
+                <td>{{ link.clicks }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>
